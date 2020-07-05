@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Page;
 
 class Header extends Component
 {
@@ -12,14 +13,11 @@ class Header extends Component
      * @return void
      */
 
-    public $pages = [
-        [ "name" => "Home", "url" => "/" ],
-        [ "name" => "Test", "url" => "/test" ],
-    ];
+    public $pages = [];
 
     public function __construct()
     {
-        
+        $this->pages = Page::all();
     }
 
     /**

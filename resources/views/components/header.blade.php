@@ -4,7 +4,7 @@
    <ul style="display: flex; ">
        @foreach ($pages as $page)
            <li style="display: block; margin-right: 10px; ">
-                <a href="{{ $page['url'] }}">{{ $page['name'] }}</a>
+                <a href="{{ $page['slug'] }}" >{{ $page['name'] }}</a>
             </li>
        @endforeach
    </ul>

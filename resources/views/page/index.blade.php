@@ -4,11 +4,8 @@
 
 @section('contents')
     
-<h1>{{ $data['name'] }}</h1>
+    <h1>{{ $data['name'] }}</h1>
 
-
-{!! $data['contents'] !!}
-
-
+    {!! $data['content'] !!}
 
 @endsection
