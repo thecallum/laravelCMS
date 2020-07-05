@@ -50,7 +50,7 @@ class PageController extends Controller
 
         $page = $validPages[0];
 
-        return view('page.index', [ "data" => $page ]);
+        return view('page.index', [ "data" => $page, "title" => $page['name'] ]);
 
     }
 }

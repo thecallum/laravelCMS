@@ -4,16 +4,22 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class PageHeader extends Component
+class Header extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
+
+    public $pages = [
+        [ "name" => "Home", "url" => "/" ],
+        [ "name" => "Test", "url" => "/test" ],
+    ];
+
     public function __construct()
     {
-        //
+        
     }
 
     /**
@@ -23,6 +29,6 @@ class PageHeader extends Component
      */
     public function render()
     {
-        return view('components.page-header');
+        return view('components.header');
     }
 }
