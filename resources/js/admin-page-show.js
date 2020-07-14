@@ -14,26 +14,46 @@ new Vue({
         this.title = page.title;
         this.slug = page.slug;
         this.content = page.content;
+
+        this.initialState = this.getCurrentState();
     },
     data: {
+        initialState: null,
+
         name: "",
         title: "",
         slug: "",
-        content: ""
-    },
+        content: "",
 
+        errors: null
+    },
+    computed: {
+        contentChanged() {
+            return this.initialState !== this.getCurrentState();
+        }
+    },
     methods: {
+        getCurrentState() {
+            return JSON.stringify({
+                name: this.name,
+                title: this.title,
+                slug: this.slug,
+                content: this.content
+            });
+        },
         submit(e) {
             e.preventDefault();
 
-            console.log("submit form");
+            if (!this.contentChanged) return;
+
+            // console.log("submit form");
 
             const data = JSON.stringify({
                 ...this.$data,
                 _method: "patch"
             });
 
-            console.log({ data });
+            // console.log({ data });
 
             const csrfToken = document.head.querySelector(
                 "[name~=csrf-token][content]"
@@ -49,18 +69,26 @@ new Vue({
                 },
                 data: data
             })
-                // .then(response => {
-                //     console.log({ response });
-                //     return response.json();
-                // })
                 .then(response => {
                     console.log({ response });
+
+                    this.initialState = this.getCurrentState();
                 })
                 .catch(error => {
                     console.log({ error });
 
                     console.table(error.response.data.errors);
+
+                    this.errors = error.response.data.errors;
                 });
+        },
+        undoChanges() {
+            const initialState = JSON.parse(this.initialState);
+
+            this.name = initialState.name;
+            this.title = initialState.title;
+            this.slug = initialState.slug;
+            this.content = initialState.content;
         }
     }
 });

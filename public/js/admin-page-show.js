@@ -14690,23 +14690,40 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     this.title = page.title;
     this.slug = page.slug;
     this.content = page.content;
+    this.initialState = this.getCurrentState();
   },
   data: {
+    initialState: null,
     name: "",
     title: "",
     slug: "",
-    content: ""
+    content: "",
+    errors: null
+  },
+  computed: {
+    contentChanged: function contentChanged() {
+      return this.initialState !== this.getCurrentState();
+    }
   },
   methods: {
+    getCurrentState: function getCurrentState() {
+      return JSON.stringify({
+        name: this.name,
+        title: this.title,
+        slug: this.slug,
+        content: this.content
+      });
+    },
     submit: function submit(e) {
+      var _this = this;
+
       e.preventDefault();
-      console.log("submit form");
+      if (!this.contentChanged) return; // console.log("submit form");
+
       var data = JSON.stringify(_objectSpread(_objectSpread({}, this.$data), {}, {
         _method: "patch"
-      }));
-      console.log({
-        data: data
-      });
+      })); // console.log({ data });
+
       var csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         url: "/admin/pages/".concat(this.id),
@@ -14717,20 +14734,25 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           "X-CSRF-Token": csrfToken
         },
         data: data
-      }) // .then(response => {
-      //     console.log({ response });
-      //     return response.json();
-      // })
-      .then(function (response) {
+      }).then(function (response) {
         console.log({
           response: response
         });
+        _this.initialState = _this.getCurrentState();
       })["catch"](function (error) {
         console.log({
           error: error
         });
         console.table(error.response.data.errors);
+        _this.errors = error.response.data.errors;
       });
+    },
+    undoChanges: function undoChanges() {
+      var initialState = JSON.parse(this.initialState);
+      this.name = initialState.name;
+      this.title = initialState.title;
+      this.slug = initialState.slug;
+      this.content = initialState.content;
     }
   }
 });

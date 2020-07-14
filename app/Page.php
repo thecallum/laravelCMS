@@ -10,6 +10,6 @@ class Page extends Model
         "name",
         "title",
         "slug",
-        "contents"
+        "content"
     ];
 }

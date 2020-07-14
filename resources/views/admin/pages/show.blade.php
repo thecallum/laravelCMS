@@ -9,6 +9,14 @@
 
     <div id="app">
 
+        <div class="alert alert-danger" v-if="errors !== null" v-cloak>
+            <div><strong>Please fix the following errors</strong></div>
+
+            <ul>
+                <li v-for="error in errors">@{{ error }}</li>
+            </ul>
+        </div>
+
       <form @submit="submit">
         <div class="form-group">
             <label for="exampleInputEmail1">Name</label>
@@ -39,6 +47,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" :disabled="!contentChanged" @click="undoChanges">Undo Changes</button>
       </form>
 
         

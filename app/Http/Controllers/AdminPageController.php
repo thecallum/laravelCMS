@@ -79,7 +79,7 @@ class AdminPageController extends Controller
             'name' => 'required|string',
             'title' => 'required|string',
             'slug' => 'required|string',
-            'content' => 'required|string',
+            'content' => 'required|min:3|max:10000',
         ]);
 
         $page->update($validatedData);
