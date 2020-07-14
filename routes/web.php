@@ -15,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin', 'AdminController@index');
 
+Route::resource("/admin/pages", "AdminPageController");
+
 Route::get('/{any}', 'PageController@index')->where('any', '.*');

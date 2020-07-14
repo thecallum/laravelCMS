@@ -9,10 +9,6 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $pages = Page::all();
-
-        return view('admin.index', [
-            "pages" => $pages
-        ]);
+        return view('admin.index');
     }
 }

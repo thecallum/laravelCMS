@@ -13,9 +13,8 @@ class Breadcrumb extends Component
      */
 
     public $paths = [
-        [ "name" => "Home", "url" => "/" ],
-        [ "name" => "Admin", "url" => "/admin" ],
-        [ "name" => "Dashboard", "url" => "/admin/dashboard" ],
+        [ "name" => "Home", "url" => "/admin" ],
+        [ "name" => "Pages", "url" => "/admin/pages" ],
     ];
 
     public $name = "Callum";
