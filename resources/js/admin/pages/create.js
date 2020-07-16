@@ -2,10 +2,15 @@ import Vue from "vue";
 import axios from "axios";
 import TextareaAutosize from "vue-textarea-autosize";
 
+import Error from "../components/error";
+
 Vue.use(TextareaAutosize);
 
 new Vue({
     el: "#app",
+    components: {
+        Error
+    },
     data: {
         name: "",
         title: "",

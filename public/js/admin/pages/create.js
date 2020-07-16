@@ -14655,6 +14655,38 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./resources/js/admin/components/error.js":
+/*!************************************************!*\
+  !*** ./resources/js/admin/components/error.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = (vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend({
+  props: {
+    errors: Array,
+    name: String
+  },
+  data: function data() {
+    return {};
+  },
+  computed: {
+    releventErrors: function releventErrors() {
+      if (this.errors === null) return null;
+      if (!this.errors.hasOwnProperty(this.name)) return null;
+      return this.errors[this.name];
+    }
+  },
+  template: "\n        <div class=\"alert alert-danger\" v-cloak v-if=\"releventErrors !== null\">\n            <ul>\n                <li v-for=\"error in releventErrors\">\n                    {{ error }}\n                </li>\n            </ul>\n        </div>\n    "
+}));
+
+/***/ }),
+
 /***/ "./resources/js/admin/pages/create.js":
 /*!********************************************!*\
   !*** ./resources/js/admin/pages/create.js ***!
@@ -14669,6 +14701,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-textarea-autosize */ "./node_modules/vue-textarea-autosize/dist/vue-textarea-autosize.esm.js");
+/* harmony import */ var _components_error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/error */ "./resources/js/admin/components/error.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -14678,9 +14711,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_2__["default"]);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
+  components: {
+    Error: _components_error__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
   data: {
     name: "",
     title: "",
