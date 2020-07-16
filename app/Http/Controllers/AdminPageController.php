@@ -111,7 +111,7 @@ class AdminPageController extends Controller
         return [
             'name' => 'required|string',
             'title' => 'required|string',
-            'slug' => 'required|string',
+            'slug' => 'required|string|regex:/^([a-z\\\\0-9\\\\-]){1,255}$/|unique:App\Page,slug',
             'content' => 'required|min:3|max:10000',
         ];
     }
