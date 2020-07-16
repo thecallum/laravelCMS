@@ -1,12 +1,11 @@
 @extends('admin.layout.admin')
 
 @section('content')
-    <h2>Page</h2>
+    <h2>Create a new page</h2>
     
-    <script>
-        const page = @JSON($page);
-    </script>
 
+
+    
     <div id="app">
 
         <div class="alert alert-danger" v-if="errors !== null" v-cloak>
@@ -32,6 +31,7 @@
             <label for="exampleInputEmail1">Slug</label>
             <input type="text" class="form-control" id="" placeholder="Enter slug" v-model="slug">
         </div>
+        
 
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Contents</label>
@@ -46,15 +46,13 @@
             ></textarea-autosize>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-secondary" :disabled="!contentChanged" @click="undoChanges">Undo Changes</button>
+        <button type="submit" class="btn btn-primary">Create</button>
       </form>
 
         
     </div>
-    
 @endsection
 
 @section('javascript')
-    <script src="/js/admin/pages/show.js"></script>
+    <script src="/js/admin/pages/create.js"></script>
 @endsection

@@ -28,7 +28,11 @@ class AdminPageController extends Controller
      */
     public function create()
     {
-        //
+        $pages = Page::all();
+
+        return View("admin.pages.create", [
+            "pages" => $pages
+        ]);
     }
 
     /**
@@ -39,7 +43,14 @@ class AdminPageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validatedData = $request->validate(
+            $this->pageValidationRules()
+        );
+
+        Page::create($validatedData);
+
+        return $validatedData;
     }
 
     /**
@@ -75,12 +86,9 @@ class AdminPageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'title' => 'required|string',
-            'slug' => 'required|string',
-            'content' => 'required|min:3|max:10000',
-        ]);
+        $validatedData = $request->validate(
+            $this->pageValidationRules()
+        );
 
         $page->update($validatedData);
 
@@ -96,5 +104,15 @@ class AdminPageController extends Controller
     public function destroy(Page $page)
     {
         //
+    }
+
+    private function pageValidationRules()
+    {
+        return [
+            'name' => 'required|string',
+            'title' => 'required|string',
+            'slug' => 'required|string',
+            'content' => 'required|min:3|max:10000',
+        ];
     }
 }

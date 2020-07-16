@@ -21,8 +21,10 @@
         >
         </vue-bootstrap-table>
     </div>
+
+    <a href="/admin/pages/create" class="btn btn-primary mt-3">Add Page</a>
 @endsection
 
 @section('javascript')
-    <script src="/js/admin-search.js"></script>
+    <script src="/js/admin/search.js"></script>
 @endsection

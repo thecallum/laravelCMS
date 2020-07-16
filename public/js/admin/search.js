@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -24796,9 +24796,9 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./resources/js/admin-search.js":
+/***/ "./resources/js/admin/search.js":
 /*!**************************************!*\
-  !*** ./resources/js/admin-search.js ***!
+  !*** ./resources/js/admin/search.js ***!
   \**************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -24846,14 +24846,26 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
-/***/ 1:
-/*!********************************************!*\
-  !*** multi ./resources/js/admin-search.js ***!
-  \********************************************/
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!**********************************************************************!*\
+  !*** multi ./resources/js/admin/search.js ./resources/sass/app.scss ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/callum/Projects/laravelCMS/resources/js/admin-search.js */"./resources/js/admin-search.js");
+__webpack_require__(/*! /home/callum/Projects/laravelCMS/resources/js/admin/search.js */"./resources/js/admin/search.js");
+module.exports = __webpack_require__(/*! /home/callum/Projects/laravelCMS/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

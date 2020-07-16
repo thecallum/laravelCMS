@@ -14655,10 +14655,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./resources/js/admin-page-show.js":
-/*!*****************************************!*\
-  !*** ./resources/js/admin-page-show.js ***!
-  \*****************************************/
+/***/ "./resources/js/admin/pages/create.js":
+/*!********************************************!*\
+  !*** ./resources/js/admin/pages/create.js ***!
+  \********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14681,52 +14681,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_2__["default"]);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
-  beforeMount: function beforeMount() {
-    console.log("before mount", {
-      page: page
-    });
-    this.id = page.id;
-    this.name = page.name;
-    this.title = page.title;
-    this.slug = page.slug;
-    this.content = page.content;
-    this.initialState = this.getCurrentState();
-  },
   data: {
-    initialState: null,
     name: "",
     title: "",
     slug: "",
     content: "",
     errors: null
   },
-  computed: {
-    contentChanged: function contentChanged() {
-      return this.initialState !== this.getCurrentState();
-    }
-  },
   methods: {
-    getCurrentState: function getCurrentState() {
-      return JSON.stringify({
-        name: this.name,
-        title: this.title,
-        slug: this.slug,
-        content: this.content
-      });
-    },
     submit: function submit(e) {
       var _this = this;
 
       e.preventDefault();
-      if (!this.contentChanged) return; // console.log("submit form");
-
-      var data = JSON.stringify(_objectSpread(_objectSpread({}, this.$data), {}, {
-        _method: "patch"
-      })); // console.log({ data });
-
+      var data = JSON.stringify(_objectSpread({}, this.$data));
       var csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        url: "/admin/pages/".concat(this.id),
+        url: "/admin/pages/",
         method: "post",
         responseType: "json",
         headers: {
@@ -14738,7 +14708,6 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         console.log({
           response: response
         });
-        _this.initialState = _this.getCurrentState();
       })["catch"](function (error) {
         console.log({
           error: error
@@ -14746,13 +14715,6 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         console.table(error.response.data.errors);
         _this.errors = error.response.data.errors;
       });
-    },
-    undoChanges: function undoChanges() {
-      var initialState = JSON.parse(this.initialState);
-      this.name = initialState.name;
-      this.title = initialState.title;
-      this.slug = initialState.slug;
-      this.content = initialState.content;
     }
   }
 });
@@ -14760,13 +14722,13 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /***/ }),
 
 /***/ 2:
-/*!***********************************************!*\
-  !*** multi ./resources/js/admin-page-show.js ***!
-  \***********************************************/
+/*!**************************************************!*\
+  !*** multi ./resources/js/admin/pages/create.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/callum/Projects/laravelCMS/resources/js/admin-page-show.js */"./resources/js/admin-page-show.js");
+module.exports = __webpack_require__(/*! /home/callum/Projects/laravelCMS/resources/js/admin/pages/create.js */"./resources/js/admin/pages/create.js");
 
 
 /***/ })
