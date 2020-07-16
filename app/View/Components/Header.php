@@ -17,7 +17,15 @@ class Header extends Component
 
     public function __construct()
     {
-        $this->pages = Page::all();
+        $pages = Page::all();
+
+        foreach($pages as $page)
+        {
+            array_push($this->pages, [
+                "name" => $page->name,
+                "slug" => $page->allParents()
+            ]);
+        }
     }
 
     /**

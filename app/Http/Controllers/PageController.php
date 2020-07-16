@@ -8,11 +8,6 @@ use App\Page;
 
 class PageController extends Controller
 {
-    private $pages = [
-        [ "name" => "Home Page", "path" => "/", "contents" => "<p>Home page contents</p>" ],
-        [ "name" => "Test Page", "path" => "test", "contents" => "<p style=\"color:red\">Test page contents</p>" ]
-    ];  
-
     public function index()
     {
         $route = Route::current();
@@ -22,12 +17,29 @@ class PageController extends Controller
             $slug = $route->parameters["any"];
         }
 
-        $page = Page::where("slug", $slug)->first();
+        $params = explode("/", $slug);
+        $last =  $params[array_key_last($params)];
 
-        if ($page == null) {
-            return abort(404);
+        if ($last == "") {
+            // homepage
+            $last = "/";
         }
 
-        return view('page.index', [ "data" => $page, "title" => $page->name ]);
+        $pages = Page::where('slug', $last)->get();
+
+        // $slugs = [];
+
+        foreach($pages as $page) {
+            $pageSlug = $page->allParents();
+
+            if (($slug == '/' && $slug == $pageSlug) || '/' . $slug == $pageSlug) {
+                // dd("found");
+                return view('page.index', [ "data" => $page, "title" => $page->name ]);
+            }
+        }
+
+            // echo "404";
+            return abort(404);
+      
     }
 }

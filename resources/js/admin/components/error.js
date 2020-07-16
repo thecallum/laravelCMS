@@ -2,7 +2,7 @@ import Vue from "vue";
 
 export default Vue.extend({
     props: {
-        errors: Array,
+        errors: Object,
         name: String
     },
     data() {

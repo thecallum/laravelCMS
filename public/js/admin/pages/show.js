@@ -14669,7 +14669,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = (vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend({
   props: {
-    errors: Array,
+    errors: Object,
     name: String
   },
   data: function data() {
