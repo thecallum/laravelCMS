@@ -44,6 +44,10 @@ new Vue({
             })
                 .then(response => {
                     console.log({ response });
+
+                    const editURL = `/admin/pages/${response.data.id}`;
+
+                    window.location.href = editURL;
                 })
                 .catch(error => {
                     console.log({ error });

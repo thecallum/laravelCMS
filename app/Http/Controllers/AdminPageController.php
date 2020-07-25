@@ -43,16 +43,13 @@ class AdminPageController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
         $validatedData = $request->validate(
             $this->pageValidationRules()
         );
 
-        Page::create($validatedData);
+        $newPage = Page::create($validatedData);
 
-        return $validatedData;
+        return $newPage->toArray();
     }
 
     /**

@@ -14745,6 +14745,8 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         console.log({
           response: response
         });
+        var editURL = "/admin/pages/".concat(response.data.id);
+        window.location.href = editURL;
       })["catch"](function (error) {
         console.log({
           error: error
