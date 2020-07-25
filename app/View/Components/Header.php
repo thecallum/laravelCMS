@@ -23,7 +23,7 @@ class Header extends Component
         {
             array_push($this->pages, [
                 "name" => $page->name,
-                "slug" => $page->allParents()
+                "slug" => $page->fullURL()
             ]);
         }
     }

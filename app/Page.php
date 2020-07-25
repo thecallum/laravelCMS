@@ -12,7 +12,7 @@ class Page extends Model
         return \App\Page::find($this->parent_page_id);
     }
 
-    public function allParents(){
+    public function fullURL(){
         $currentParent = $this;
         $last = false;
         $params = [$currentParent->slug];
