@@ -6,6 +6,6 @@
     
     <h1>{{ $data['name'] }}</h1>
 
-    {!! $data['content'] !!}
+    {{ Markdown::parse($data['content']) }}
 
 @endsection
