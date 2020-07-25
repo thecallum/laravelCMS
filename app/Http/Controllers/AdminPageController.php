@@ -44,6 +44,8 @@ class AdminPageController extends Controller
     public function store(Request $request)
     {
 
+
+
         $validatedData = $request->validate(
             $this->pageValidationRules()
         );
@@ -86,8 +88,11 @@ class AdminPageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
+
+        // dd($page->id);
+
         $validatedData = $request->validate(
-            $this->pageValidationRules()
+            $this->pageValidationRules($page->id)
         );
 
         $page->update($validatedData);
@@ -106,12 +111,17 @@ class AdminPageController extends Controller
         //
     }
 
-    private function pageValidationRules()
+    private function pageValidationRules($pageId = null)
     {
         return [
             'name' => 'required|string',
             'title' => 'required|string',
-            'slug' => 'required|string|regex:/^([a-z\\\\0-9\\\\-]){1,255}$/|unique:App\Page,slug',
+            'slug' => [
+                'required',
+                'string',
+                'regex:/^([a-z\\\\0-9\\\\-]){1,255}$/',
+                'unique:App\Page,slug,' . $pageId
+            ],
             'content' => 'required|min:3|max:10000',
         ];
     }
