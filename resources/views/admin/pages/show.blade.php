@@ -5,6 +5,7 @@
     
     <script>
         const page = @JSON($page);
+        const allPages = @JSON($allPages);
     </script>
 
     <div id="app">
@@ -26,6 +27,24 @@
             <input type="text" class="form-control" id="" placeholder="Enter slug" v-model="slug">
         </div>
         <error :errors="errors" name="slug"></error>
+
+        <div class="form-group">
+            <label for="exampleInputEmail1">Full URL</label>
+            <input type="text" class="form-control" v-model="fullURL" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Parent Page</label>
+            <select class="form-control" id="exampleFormControlSelect1" v-model="parentPageId">
+
+                <option 
+                    v-for="(page, index) in allPages"
+                    :value="page.id"
+                >
+                    @{{ page.name }}
+                </option>
+            </select>
+          </div>
 
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Contents</label>

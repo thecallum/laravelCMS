@@ -2,6 +2,7 @@ import Vue from "vue";
 import axios from "axios";
 import TextareaAutosize from "vue-textarea-autosize";
 import Error from "../components/error";
+import { forEach } from "lodash";
 
 Vue.use(TextareaAutosize);
 
@@ -13,11 +14,25 @@ new Vue({
     beforeMount() {
         console.log("before mount", { page });
 
+        console.table(allPages);
+
         this.id = page.id;
         this.name = page.name;
         this.title = page.title;
         this.slug = page.slug;
         this.content = page.content;
+
+        this.allPages = allPages;
+
+        const allPagesMap = {};
+
+        allPages.forEach((page, index) => {
+            allPagesMap[page.id] = index;
+        });
+
+        this.allPagesMap = allPagesMap;
+
+        this.parentPageId = page.parent_page_id;
 
         this.initialState = this.getCurrentState();
     },
@@ -29,11 +44,29 @@ new Vue({
         slug: "",
         content: "",
 
-        errors: null
+        errors: null,
+
+        allPages: [],
+        allPagesMap: [],
+        parentPageId: null
     },
     computed: {
         contentChanged() {
             return this.initialState !== this.getCurrentState();
+        },
+        parentPage() {
+            return this.allPages[this.allPagesMap[this.parentPageId]];
+        },
+        fullURL() {
+            const parentPageURL = this.parentPage.fullURL;
+
+            if (parentPageURL === "/") {
+                // is homepage
+                return `/${this.slug}/`;
+            }
+
+            // other page
+            return `${this.parentPage.fullURL}/${this.slug}/`;
         }
     },
     methods: {

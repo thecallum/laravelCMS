@@ -60,8 +60,11 @@ class AdminPageController extends Controller
      */
     public function show(Page $page)
     {
+        $allPages = Page::where("id", "!=", $page->id)->get();
+
         return View('admin.pages.show', [
-            "page" => $page
+            "page" => $page,
+            "allPages" => $allPages
         ]);
     }
 
