@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Page;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdminPageController extends Controller
 {
@@ -28,10 +29,10 @@ class AdminPageController extends Controller
      */
     public function create()
     {
-        $pages = Page::all();
-
-        return View("admin.pages.create", [
-            "pages" => $pages
+        $allPages = Page::all();
+        
+        return View('admin.pages.create', [
+            "allPages" => $allPages
         ]);
     }
 
@@ -88,9 +89,6 @@ class AdminPageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-
-        // dd($page->id);
-
         $validatedData = $request->validate(
             $this->pageValidationRules($page->id)
         );
@@ -111,17 +109,13 @@ class AdminPageController extends Controller
         //
     }
 
-    private function pageValidationRules($pageId = null)
+    private function pageValidationRules($id = null)
     {
         return [
             'name' => 'required|string',
             'title' => 'required|string',
-            'slug' => [
-                'required',
-                'string',
-                'regex:/^([a-z\\\\0-9\\\\-]){1,255}$/',
-                'unique:App\Page,slug,' . $pageId
-            ],
+            'parent_page_id' => 'required|exists:App\Page,id',
+            'slug' => 'required|unique_with:Pages,parent_page_id,' . $id,
             'content' => 'required|min:3|max:10000',
         ];
     }

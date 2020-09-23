@@ -11,21 +11,59 @@ new Vue({
     components: {
         Error
     },
+    beforeMount() {
+        this.allPages = allPages;
+
+        const allPagesMap = {};
+
+        allPages.forEach((page, index) => {
+            allPagesMap[page.id] = index;
+        });
+
+        this.allPagesMap = allPagesMap;
+    },
     data: {
         name: "",
         title: "",
         slug: "",
         content: "",
+        parentPageId: null,
 
-        errors: null
+        errors: null,
+
+        allPages: [],
+        allPagesMap: []
+    },
+    computed: {
+        parentPage() {
+            return this.allPages[this.allPagesMap[this.parentPageId]];
+        },
+        fullURL() {
+            if (this.parentPageId == null) {
+                return this.slug;
+            }
+
+            const parentPageURL = this.parentPage.fullURL;
+
+            if (parentPageURL === "/") {
+                // is homepage
+                return `/${this.slug}/`;
+            }
+
+            // other page
+            return `${this.parentPage.fullURL}/${this.slug}/`;
+        }
     },
     methods: {
         submit(e) {
             e.preventDefault();
 
             const data = JSON.stringify({
-                ...this.$data
-                // _method: "patch"
+                name: this.name,
+                title: this.title,
+                slug: this.slug,
+                content: this.content,
+                parent_page_id: this.parentPageId
             });
 
             const csrfToken = document.head.querySelector(
@@ -47,7 +85,7 @@ new Vue({
 
                     const editURL = `/admin/pages/${response.data.id}`;
 
-                    window.location.href = editURL;
+                    document.location.replace(editURL);
                 })
                 .catch(error => {
                     console.log({ error });

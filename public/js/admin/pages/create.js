@@ -14702,12 +14702,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-textarea-autosize */ "./node_modules/vue-textarea-autosize/dist/vue-textarea-autosize.esm.js");
 /* harmony import */ var _components_error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/error */ "./resources/js/admin/components/error.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -14718,19 +14712,56 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   components: {
     Error: _components_error__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
+  beforeMount: function beforeMount() {
+    this.allPages = allPages;
+    var allPagesMap = {};
+    allPages.forEach(function (page, index) {
+      allPagesMap[page.id] = index;
+    });
+    this.allPagesMap = allPagesMap;
+  },
   data: {
     name: "",
     title: "",
     slug: "",
     content: "",
-    errors: null
+    parentPageId: null,
+    errors: null,
+    allPages: [],
+    allPagesMap: []
+  },
+  computed: {
+    parentPage: function parentPage() {
+      return this.allPages[this.allPagesMap[this.parentPageId]];
+    },
+    fullURL: function fullURL() {
+      if (this.parentPageId == null) {
+        return this.slug;
+      }
+
+      var parentPageURL = this.parentPage.fullURL;
+
+      if (parentPageURL === "/") {
+        // is homepage
+        return "/".concat(this.slug, "/");
+      } // other page
+
+
+      return "".concat(this.parentPage.fullURL, "/").concat(this.slug, "/");
+    }
   },
   methods: {
     submit: function submit(e) {
       var _this = this;
 
       e.preventDefault();
-      var data = JSON.stringify(_objectSpread({}, this.$data));
+      var data = JSON.stringify({
+        name: this.name,
+        title: this.title,
+        slug: this.slug,
+        content: this.content,
+        parent_page_id: this.parentPageId
+      });
       var csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
         url: "/admin/pages/",
@@ -14746,7 +14777,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           response: response
         });
         var editURL = "/admin/pages/".concat(response.data.id);
-        window.location.href = editURL;
+        document.location.replace(editURL);
       })["catch"](function (error) {
         console.log({
           error: error

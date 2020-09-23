@@ -7,7 +7,7 @@ new Vue({
         VueBootstrapTable: VueBootstrapTable
     },
     beforeMount() {
-        console.log("before mount");
+        console.log("before mount", { pages });
 
         this.values = pages;
     },
@@ -29,7 +29,7 @@ new Vue({
                 editable: true
             },
             {
-                title: "slug",
+                title: "fullURL",
                 visible: true,
                 editable: true
             }

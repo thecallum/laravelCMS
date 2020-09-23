@@ -2,7 +2,6 @@ import Vue from "vue";
 import axios from "axios";
 import TextareaAutosize from "vue-textarea-autosize";
 import Error from "../components/error";
-import { forEach } from "lodash";
 
 Vue.use(TextareaAutosize);
 
@@ -13,8 +12,6 @@ new Vue({
     },
     beforeMount() {
         console.log("before mount", { page });
-
-        console.table(allPages);
 
         this.id = page.id;
         this.name = page.name;
@@ -32,7 +29,7 @@ new Vue({
 
         this.allPagesMap = allPagesMap;
 
-        this.parentPageId = page.parent_page_id;
+        this.parentPageId = parseInt(page.parent_page_id) || null;
 
         this.initialState = this.getCurrentState();
     },
@@ -43,12 +40,12 @@ new Vue({
         title: "",
         slug: "",
         content: "",
+        parentPageId: null,
 
         errors: null,
 
         allPages: [],
-        allPagesMap: [],
-        parentPageId: null
+        allPagesMap: []
     },
     computed: {
         contentChanged() {
@@ -58,6 +55,10 @@ new Vue({
             return this.allPages[this.allPagesMap[this.parentPageId]];
         },
         fullURL() {
+            if (this.parentPageId == null) {
+                return this.slug;
+            }
+
             const parentPageURL = this.parentPage.fullURL;
 
             if (parentPageURL === "/") {
@@ -75,7 +76,9 @@ new Vue({
                 name: this.name,
                 title: this.title,
                 slug: this.slug,
-                content: this.content
+                content: this.content,
+
+                parentPageId: this.parentPageId
             });
         },
         submit(e) {
@@ -86,11 +89,16 @@ new Vue({
             // console.log("submit form");
 
             const data = JSON.stringify({
-                ...this.$data,
+                name: this.name,
+                title: this.title,
+                slug: this.slug,
+                content: this.content,
+                parent_page_id: this.parentPageId,
+
                 _method: "patch"
             });
 
-            // console.log({ data });
+            console.log({ data });
 
             const csrfToken = document.head.querySelector(
                 "[name~=csrf-token][content]"

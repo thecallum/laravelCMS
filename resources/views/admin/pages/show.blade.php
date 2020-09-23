@@ -1,7 +1,7 @@
 @extends('admin.layout.admin')
 
 @section('content')
-    <h2>Page</h2>
+    <h2>Edit page</h2>
     
     <script>
         const page = @JSON($page);
@@ -45,6 +45,7 @@
                 </option>
             </select>
           </div>
+          <error :errors="errors" name="parent_page_id"></error>
 
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Contents</label>

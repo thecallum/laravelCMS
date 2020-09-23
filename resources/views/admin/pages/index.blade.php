@@ -5,6 +5,8 @@
     
     <script>
         const pages = @json($pages ?? '');
+
+        console.log({ pages })
     </script>
 
     <div id="app">

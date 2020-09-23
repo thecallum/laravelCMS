@@ -24817,7 +24817,9 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     VueBootstrapTable: vue2_bootstrap_table2__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   beforeMount: function beforeMount() {
-    console.log("before mount");
+    console.log("before mount", {
+      pages: pages
+    });
     this.values = pages;
   },
   methods: {
@@ -24836,7 +24838,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       visible: true,
       editable: true
     }, {
-      title: "slug",
+      title: "fullURL",
       visible: true,
       editable: true
     }],
